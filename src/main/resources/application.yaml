@@ -1,6 +1,6 @@
 spring:
   application:
-    name: lovable-clone
+    name: codifyai
 
   datasource:
     url: ${DB_URL}
@@ -26,4 +26,9 @@ stripe:
   webhook:
     secret-key: ${STRIPE_WEBHOOK_SECRET_KEY}
 
-client.url : http://localhost:8080
+client:
+  url: http://localhost:8080
+
+server:
+  port: ${PORT:8080}
+  forward-headers-strategy: framework
