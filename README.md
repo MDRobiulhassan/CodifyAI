@@ -7,8 +7,7 @@ An AI-powered full-stack application builder that transforms natural language pr
 Explore all available endpoints through Swagger UI:
 
 **Backend URL:**  
-https://triphive-backend.up.railway.app/swagger-ui/index.html
-
+https://codifyai-backend.up.railway.app/swagger-ui/index.html
 
 **Note**: This is a project developed for educational and learning purposes. For production deployment, additional security hardening, performance optimizations, and compliance measures may be required.
 

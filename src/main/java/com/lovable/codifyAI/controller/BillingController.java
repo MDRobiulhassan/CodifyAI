@@ -1,7 +1,7 @@
 package com.lovable.codifyAI.controller;
 
 import com.lovable.codifyAI.dto.subscription.CheckoutRequest;
-import com.lovable.codifyAI.service.PaymentProcessor;
+import com.lovable.codifyAI.service.StripePaymentProcessor;
 import com.lovable.codifyAI.service.SubscriptionService;
 import com.stripe.exception.SignatureVerificationException;
 import com.stripe.model.Event;
@@ -27,7 +27,7 @@ import java.util.Map;
 public class BillingController {
 
     private final SubscriptionService subscriptionService;
-    private final PaymentProcessor paymentProcessor;
+    private final StripePaymentProcessor stripePaymentProcessor;
 
     @Value("${stripe.webhook.secret-key}")
     private String stripeWebhookSecretKey;
@@ -45,13 +45,13 @@ public class BillingController {
 
     @PostMapping("/payment/checkout")
     public ResponseEntity<?> createCheckoutResponse(@Valid @RequestBody CheckoutRequest request) {
-        return ResponseEntity.ok(paymentProcessor.createCheckoutSessionUrl(request));
+        return ResponseEntity.ok(stripePaymentProcessor.createCheckoutSessionUrl(request));
     }
 
     @PostMapping("/payment/portal")
     public ResponseEntity<?> openCustomerPortal() {
         Long userId = 1L;
-        return ResponseEntity.ok(paymentProcessor.openCustomerPortal(userId));
+        return ResponseEntity.ok(stripePaymentProcessor.openCustomerPortal(userId));
     }
 
     @PostMapping("/webhooks/payemnt")
@@ -85,7 +85,7 @@ public class BillingController {
                 metaData = session.getMetadata();
             }
 
-            paymentProcessor.handleWebhookEvent(event.getType(), stripeObject, metaData);
+            stripePaymentProcessor.handleWebhookEvent(event.getType(), stripeObject, metaData);
             return ResponseEntity.ok().build();
         } catch (SignatureVerificationException e) {
             throw new RuntimeException(e);

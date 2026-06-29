@@ -9,7 +9,7 @@ import com.lovable.codifyAI.error.ResourceNotFoundException;
 import com.lovable.codifyAI.repository.PlanRepository;
 import com.lovable.codifyAI.repository.UserRepository;
 import com.lovable.codifyAI.security.AuthUtil;
-import com.lovable.codifyAI.service.PaymentProcessor;
+import com.lovable.codifyAI.service.StripePaymentProcessor;
 import com.stripe.exception.StripeException;
 import com.stripe.model.StripeObject;
 import com.stripe.model.checkout.Session;
@@ -24,7 +24,7 @@ import java.util.Map;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class StripePaymentProcessorImpl implements PaymentProcessor {
+public class StripeStripePaymentProcessorImpl implements StripePaymentProcessor {
 
     private final AuthUtil authUtil;
     private final PlanRepository planRepository;

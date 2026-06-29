@@ -7,7 +7,7 @@ import com.stripe.model.StripeObject;
 
 import java.util.Map;
 
-public interface PaymentProcessor {
+public interface StripePaymentProcessor {
     CheckoutResponse createCheckoutSessionUrl(CheckoutRequest request);
 
     PortalResponse openCustomerPortal(Long userId);
