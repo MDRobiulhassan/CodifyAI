@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.lovable</groupId>
-    <artifactId>Lovable-Clone</artifactId>
+    <artifactId>CodifyAI</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>lovable-clone</name>
     <description>Lovable Clone</description>
