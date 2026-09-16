@@ -9,6 +9,7 @@ import com.codifyai.mapper.ProjectFileMapper;
 import com.codifyai.repository.ProjectFileRepository;
 import com.codifyai.repository.ProjectRepository;
 import com.codifyai.service.ProjectFileService;
+import io.minio.GetObjectArgs;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
 import lombok.RequiredArgsConstructor;
@@ -33,18 +34,33 @@ public class ProjectFileServiceImpl implements ProjectFileService {
     private final ProjectFileRepository projectFileRepository;
     private final ProjectFileMapper projectFileMapper;
 
-    @Value("${minio.project-bucket}" )
+    @Value("${minio.project-bucket}")
     private String projectBucket;
 
+    private static final String BUCKET_NAME = "codify-ai";
+
     @Override
-    public List<FileNode> getFileTree(Long projectId, Long userId) {
+    public List<FileNode> getFileTree(Long projectId) {
         List<ProjectFile> projectFiles = projectFileRepository.findByProjectId(projectId);
         return projectFileMapper.toListOfFileNode(projectFiles);
     }
 
     @Override
-    public FileContentResponse getFileContent(Long projectId, Long userId, String path) {
-        return null;
+    public FileContentResponse getFileContent(Long projectId, String path) {
+        String objectName = projectId + "/" + path;
+        try (
+                InputStream is = minioClient.getObject(
+                        GetObjectArgs.builder()
+                                .bucket(BUCKET_NAME)
+                                .object(objectName)
+                                .build())) {
+
+            String content = new String(is.readAllBytes(), StandardCharsets.UTF_8);
+            return new FileContentResponse(path, content);
+        } catch (Exception e) {
+            log.error("Failed to read file: {}/{}", projectId, path, e);
+            throw new RuntimeException("Failed to read file content", e);
+        }
     }
 
     @Override
@@ -53,7 +69,7 @@ public class ProjectFileServiceImpl implements ProjectFileService {
                 () -> new ResourceNotFoundException("Project", projectId.toString())
         );
 
-        String cleanPath = filePath.startsWith("/" ) ? filePath.substring(1) : filePath;
+        String cleanPath = filePath.startsWith("/") ? filePath.substring(1) : filePath;
         String objectKey = project.getId() + "/" + cleanPath;
 
         try {
@@ -90,10 +106,10 @@ public class ProjectFileServiceImpl implements ProjectFileService {
     private String determineContentType(String filePath) {
         String type = URLConnection.guessContentTypeFromName(filePath);
         if (type != null) return type;
-        if (filePath.endsWith(".jsx" ) || filePath.endsWith(".ts" ) || filePath.endsWith(".tsx" ))
+        if (filePath.endsWith(".jsx") || filePath.endsWith(".ts") || filePath.endsWith(".tsx"))
             return "text/javascript";
-        if (filePath.endsWith(".json" )) return "application/json";
-        if (filePath.endsWith(".css" )) return "text/css";
+        if (filePath.endsWith(".json")) return "application/json";
+        if (filePath.endsWith(".css")) return "text/css";
         return "text/plain";
     }
 }

@@ -16,6 +16,7 @@ import com.codifyai.repository.ProjectRepository;
 import com.codifyai.repository.UserRepository;
 import com.codifyai.security.AuthUtil;
 import com.codifyai.service.ProjectService;
+import com.codifyai.service.ProjectTemplateService;
 import com.codifyai.service.SubscriptionService;
 import jakarta.transaction.Transactional;
 import lombok.AccessLevel;
@@ -39,6 +40,8 @@ public class ProjectServiceImpl implements ProjectService {
     ProjectMemberRepository projectMemberRepository;
     AuthUtil authUtil;
     SubscriptionService subscriptionService;
+    ProjectTemplateService projectTemplateService;
+
 
     @Override
     public List<ProjectSummaryResponse> getUserProjects() {
@@ -58,7 +61,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public ProjectResponse createProject(ProjectRequest request) {
 
-        if(!subscriptionService.CanCreateNewProject()){
+        if (!subscriptionService.CanCreateNewProject()) {
             throw new BadRequestException("You have reached the maximum number of projects allowed for your subscription plan. Please upgrade your plan to create more projects.");
         }
 
@@ -84,7 +87,7 @@ public class ProjectServiceImpl implements ProjectService {
                 .build();
 
         projectMemberRepository.save(projectMember);
-
+        projectTemplateService.initializeProjectFromTemplate(project.getId());
         return projectMapper.toProjectResponse(project);
     }
 

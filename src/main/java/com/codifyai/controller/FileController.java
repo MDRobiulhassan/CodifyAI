@@ -17,15 +17,13 @@ public class FileController {
 
     @GetMapping
     public ResponseEntity<?> getFileTree(@PathVariable Long projectId) {
-        Long userId = 1L;
-        return ResponseEntity.ok(projectFileService.getFileTree(projectId, userId));
+        return ResponseEntity.ok(projectFileService.getFileTree(projectId));
     }
 
     @GetMapping("/{path}")
     public ResponseEntity<?> getFile(
             @PathVariable Long projectId, String path) {
-        Long userId = 1L;
-        return ResponseEntity.ok(projectFileService.getFileContent(projectId, userId, path));
+        return ResponseEntity.ok(projectFileService.getFileContent(projectId, path));
     }
 
 }

@@ -22,8 +22,12 @@ spring:
       base-url: https://openrouter.ai/api/v1
       chat:
         options:
-          model: nvidia/nemotron-3-ultra-550b-a55b:free
+          model: nvidia/nemotron-3.5-lightning:free
           temperature: 0.0
+
+  security:
+    filter:
+      dispatcher-types: REQUEST
 
 jwt:
   secret-key: ${JWT_SECRET}
