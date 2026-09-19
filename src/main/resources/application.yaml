@@ -24,6 +24,7 @@ spring:
         options:
           model: nvidia/nemotron-3.5-lightning:free
           temperature: 0.0
+      timeout: 5m
 
   security:
     filter:
