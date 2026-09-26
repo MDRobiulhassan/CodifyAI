@@ -7,12 +7,14 @@ import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.Instant;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "chat_message")
 public class ChatMessage {
@@ -22,24 +24,26 @@ public class ChatMessage {
     Long id;
 
     @ManyToOne
-    @JoinColumn(name = "chat_session_id", nullable = false)
+    @JoinColumns({
+            @JoinColumn(name = "project_id", referencedColumnName = "project_id", nullable = false),
+            @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
+    })
     ChatSession chatSession;
-
-    @Column(nullable = false)
-    String content;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     MessageRole role;
 
-    @Column(length = 1000)
-    String toolCalls;
+    @Column(nullable = false)
+    String content;
 
-    String toolCallId;
-    Integer tokenUsed;
+    @OneToMany(mappedBy = "chatMessage", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("sequenceOrder ASC")
+    List<ChatEvent> events;
+
+    Integer tokenUsed = 0;
 
     @CreationTimestamp
-    @Column(updatable = false, nullable = false)
     Instant createdAt;
 
 }

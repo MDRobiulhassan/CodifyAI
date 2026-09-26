@@ -18,19 +18,20 @@ import java.time.Instant;
 @Table(name = "chat_session")
 public class ChatSession {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    @EmbeddedId
+    ChatSessionId id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @MapsId("projectId")
     @JoinColumn(name = "project_id", nullable = false)
     Project project;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @MapsId("userId")
     @JoinColumn(name = "user_id", nullable = false)
     User user;
 
-    @Column(nullable = false)
+    @Column
     String title;
 
     @CreationTimestamp
