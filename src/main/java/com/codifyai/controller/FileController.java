@@ -3,10 +3,7 @@ package com.codifyai.controller;
 import com.codifyai.service.ProjectFileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,9 +17,9 @@ public class FileController {
         return ResponseEntity.ok(projectFileService.getFileTree(projectId));
     }
 
-    @GetMapping("/{path}")
+    @GetMapping("/content")
     public ResponseEntity<?> getFile(
-            @PathVariable Long projectId, String path) {
+            @PathVariable Long projectId,@RequestParam String path) {
         return ResponseEntity.ok(projectFileService.getFileContent(projectId, path));
     }
 

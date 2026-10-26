@@ -1,7 +1,7 @@
 package com.codifyai.serviceimpl;
 
 import com.codifyai.dto.subscription.PlanResponse;
-import com.codifyai.dto.subscription.SubscriptionReponse;
+import com.codifyai.dto.subscription.SubscriptionResponse;
 import com.codifyai.entity.Plan;
 import com.codifyai.entity.Subscription;
 import com.codifyai.entity.User;
@@ -34,7 +34,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     private final UserRepository userRepository;
     private final PlanRepository planRepository;
     private final ProjectMemberRepository projectMemberRepository;
-    private final Integer FREE_TIER_PROJECT_ALLOWED = 1;
+    private final Integer FREE_TIER_PROJECT_ALLOWED = 5;
 
     @Override
     public List<PlanResponse> getAllActivePlans() {
@@ -42,7 +42,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     }
 
     @Override
-    public SubscriptionReponse getMySubscription() {
+    public SubscriptionResponse getMySubscription() {
         Long userId = authUtil.getCurrentUserId();
 
         var currentSubscription = subscriptionRepository.findByUserIdAndStatusIn(userId, Set.of(SubscriptionStatus.ACTIVE, SubscriptionStatus.PAST_DUE, SubscriptionStatus.TRAILING)).orElse(new Subscription());
@@ -147,7 +147,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     @Override
     public boolean CanCreateNewProject() {
         Long userId = authUtil.getCurrentUserId();
-        SubscriptionReponse currentSubscription = getMySubscription();
+        SubscriptionResponse currentSubscription = getMySubscription();
 
         int countOfOwnedProjects = projectMemberRepository.countProjectOwnedByUser(userId);
 

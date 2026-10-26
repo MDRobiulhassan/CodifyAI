@@ -1,6 +1,7 @@
 package com.codifyai.repository;
 
 import com.codifyai.entity.Project;
+import com.codifyai.enums.ProjectRole;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,16 +13,14 @@ import java.util.Optional;
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, Long> {
     @Query("""
-            SELECT p FROM Project p
-            WHERE p.deletedAt is NULL
-            AND EXISTS (
-                SELECT 1 FROM ProjectMember pm
-                WHERE pm.id.userId = :userId
-                AND pm.id.projectId = p.id
-            )
+            SELECT p as project, pm.projectRole as role
+            FROM Project p
+            JOIN ProjectMember pm ON pm.project.id = p.id
+            WHERE pm.user.id = :userId
+                AND p.deletedAt IS NULL
             ORDER BY p.updatedAt DESC
             """)
-    List<Project> findAllAccessibleByUser(@Param("userId") Long userId);
+    List<ProjectWithRole> findAllAccessibleByUser(@Param("userId") Long userId);
 
 
     @Query("""
@@ -35,4 +34,20 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
                 )
             """)
     Optional<Project> findAccessibleProjectById(@Param("userId") Long userId, @Param("projectId") Long projectId);
+
+    @Query("""
+            SELECT p as project, pm.projectRole as role 
+            FROM Project p
+            JOIN ProjectMember pm ON p.id = pm.id.projectId
+            WHERE p.id= :projectId
+                AND pm.user.id = :userId
+                AND p.deletedAt IS NULL
+            """)
+    Optional<ProjectWithRole> findAccessibleProjectByIdWithRole(@Param("userId") Long userId, @Param("projectId") Long projectId);
+
+    interface ProjectWithRole {
+        Project getProject();
+
+        ProjectRole getProjectRole();
+    }
 }

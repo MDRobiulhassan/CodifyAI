@@ -1,6 +1,7 @@
 package com.codifyai.controller;
 
 import com.codifyai.dto.chat.ChatRequest;
+import com.codifyai.dto.chat.StreamResponse;
 import com.codifyai.service.AiGenerationService;
 import com.codifyai.service.ChatService;
 import lombok.AccessLevel;
@@ -15,15 +16,16 @@ import reactor.core.publisher.Flux;
 @RestController
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true, level = AccessLevel.PRIVATE)
+@RequestMapping("/api/chat")
 public class ChatController {
 
     AiGenerationService aiGenerationService;
     private final ChatService chatService;
 
-    @PostMapping(value = "/api/chat/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @PostMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<?> streamChat(@RequestBody ChatRequest request) {
         return aiGenerationService.streamResponse(request.message(), request.projectId())
-                .map(data -> ServerSentEvent.<String>builder()
+                .map(data -> ServerSentEvent.<StreamResponse>builder()
                         .data(data)
                         .build());
     }

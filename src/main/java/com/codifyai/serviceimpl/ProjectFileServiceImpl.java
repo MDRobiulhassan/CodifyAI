@@ -2,6 +2,7 @@ package com.codifyai.serviceimpl;
 
 import com.codifyai.dto.project.FileContentResponse;
 import com.codifyai.dto.project.FileNode;
+import com.codifyai.dto.project.FileTreeResponse;
 import com.codifyai.entity.Project;
 import com.codifyai.entity.ProjectFile;
 import com.codifyai.error.ResourceNotFoundException;
@@ -40,9 +41,10 @@ public class ProjectFileServiceImpl implements ProjectFileService {
     private static final String BUCKET_NAME = "codify-ai";
 
     @Override
-    public List<FileNode> getFileTree(Long projectId) {
+    public FileTreeResponse getFileTree(Long projectId) {
         List<ProjectFile> projectFiles = projectFileRepository.findByProjectId(projectId);
-        return projectFileMapper.toListOfFileNode(projectFiles);
+        List<FileNode> projectFileNodes = projectFileMapper.toListOfFileNode(projectFiles);
+        return new FileTreeResponse(projectFileNodes);
     }
 
     @Override

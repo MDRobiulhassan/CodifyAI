@@ -2,7 +2,7 @@ package com.codifyai.dto.subscription;
 
 import java.time.Instant;
 
-public record SubscriptionReponse(
+public record SubscriptionResponse(
         PlanResponse plan,
         String status,
         Instant currentPeriodEnd,

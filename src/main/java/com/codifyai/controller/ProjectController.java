@@ -23,7 +23,7 @@ public class ProjectController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getProjectById(@PathVariable Long id) {
-        return ResponseEntity.ok(projectService.getProjectById(id));
+        return ResponseEntity.ok(projectService.getUserProjectById(id));
     }
 
     @PostMapping

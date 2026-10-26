@@ -6,6 +6,7 @@ import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.Instant;
+import java.time.LocalDate;
 
 @Entity
 @NoArgsConstructor
@@ -14,30 +15,20 @@ import java.time.Instant;
 @Getter
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "usage_log")
+@Table(name = "usage_logs", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"user_id", "date"})
+})
 public class UsageLog {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    User user;
-
-    @ManyToOne
-    @JoinColumn(name = "project_id")
-    Project project;
+    @Column(name = "user_id", nullable = false)
+    Long userId;
 
     @Column(nullable = false)
-    String action;
+    LocalDate date;
 
-    Integer tokenUsed;
-    Integer durationMs;
-
-    @Column(length = 1000)
-    String metaData;
-
-    @CreationTimestamp
-    Instant createdAt;
+    Integer tokensUsed;
 }
