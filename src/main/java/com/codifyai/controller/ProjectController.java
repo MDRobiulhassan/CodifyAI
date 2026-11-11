@@ -1,6 +1,7 @@
 package com.codifyai.controller;
 
 import com.codifyai.dto.project.ProjectRequest;
+import com.codifyai.service.DeploymentService;
 import com.codifyai.service.ProjectService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class ProjectController {
 
     private final ProjectService projectService;
+    private final DeploymentService deploymentService;
 
     @GetMapping
     public ResponseEntity<?> getMyProjects() {
@@ -40,6 +42,11 @@ public class ProjectController {
     public ResponseEntity<?> deleteProject(@PathVariable Long id) {
         projectService.softDelete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{id}/deploy")
+    public ResponseEntity<?> deployProject(@PathVariable Long id) {
+        return ResponseEntity.ok(deploymentService.deploy(id));
     }
 
 }

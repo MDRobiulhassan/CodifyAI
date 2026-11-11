@@ -18,8 +18,7 @@ public class FileController {
     }
 
     @GetMapping("/content")
-    public ResponseEntity<?> getFile(
-            @PathVariable Long projectId,@RequestParam String path) {
+    public ResponseEntity<?> getFile(@PathVariable Long projectId,@RequestParam String path) {
         return ResponseEntity.ok(projectFileService.getFileContent(projectId, path));
     }
 
