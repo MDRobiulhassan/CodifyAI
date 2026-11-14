@@ -35,7 +35,7 @@ public class KubernetesDeploymentServiceImpl implements DeploymentService {
         Pod existingPod = findActivePods(projectId);
 
         if (existingPod != null)
-            return new DeployResponse("https://" + domain + ":" + REVERSE_PROXY_PORT);
+            return new DeployResponse("http://" + domain + ":" + REVERSE_PROXY_PORT);
 
         return claimAndStartNewPod(projectId, domain);
     }
@@ -69,8 +69,8 @@ public class KubernetesDeploymentServiceImpl implements DeploymentService {
             log.info("Starting dev server for project {}", projectId);
             execCommand(podName, RUNNER_CONTAINER, "sh", "-c", startCmd);
 
-            log.info("Deployment successful: https://{}:{}", domain, REVERSE_PROXY_PORT);
-            return new DeployResponse("https://" + domain + ":" + REVERSE_PROXY_PORT);
+            log.info("Deployment successful: http://{}:{}", domain, REVERSE_PROXY_PORT);
+            return new DeployResponse("http://" + domain + ":" + REVERSE_PROXY_PORT);
         } catch (Exception e) {
             log.error("Deployment failed for project {}", projectId, e);
             client.pods().inNamespace(NAMESPACE).withName(podName).delete();

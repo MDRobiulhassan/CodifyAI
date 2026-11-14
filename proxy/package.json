@@ -1,0 +1,13 @@
+{
+    "name": "codify-ai-proxy",
+    "version": "1.0.0",
+    "description": "WildCard proxy for project previews",
+    "main": "index.js",
+    "dependencies": {
+        "http-proxy": "^1.18.1",
+        "ioredis": "^5.3.5"
+    },
+    "scripts": {
+        "start": "node index.js"
+    }
+}
