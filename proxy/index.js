@@ -40,7 +40,7 @@ async function getTarget(hostname) {
 }
 
 const getTargetUrl = (ip) => {
-  return ip.includes(":") ? `http://[${ip}]` : `http://${ip}:5173`;
+    return `http://${ip}`;
 };
 
 const server = http.createServer(async (req, res) => {

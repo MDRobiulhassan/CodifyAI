@@ -8,6 +8,7 @@ import io.fabric8.kubernetes.client.dsl.ExecListener;
 import io.fabric8.kubernetes.client.dsl.ExecWatch;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
@@ -28,46 +29,53 @@ public class KubernetesDeploymentServiceImpl implements DeploymentService {
     private static final String RUNNER_CONTAINER = "runner";
     private static final String REVERSE_PROXY_PORT = "8090";
     private final KubernetesClient client;
+    private final StringRedisTemplate redisTemplate;
 
     @Override
     public DeployResponse deploy(Long projectId) {
         String domain = "project-" + projectId + ".app.codify-ai.com";
         Pod existingPod = findActivePods(projectId);
 
-        if (existingPod != null)
+        if (existingPod != null) {
+            registerRoute(domain, existingPod);
             return new DeployResponse("http://" + domain + ":" + REVERSE_PROXY_PORT);
+        }
 
         return claimAndStartNewPod(projectId, domain);
     }
 
     private DeployResponse claimAndStartNewPod(Long projectId, String domain) {
         Pod pod = client.pods().inNamespace(NAMESPACE)
-                .withLabel(PROJECT_LABEL, IDLE)
+                .withLabel(POOL_LABEL, IDLE)
                 .list().getItems().stream()
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("No idle runners available.Please scale up the runner pool."));
+                .orElseThrow(() -> new RuntimeException(
+                        "No idle runners available. Please scale up the runner pool."
+                ));
 
         String podName = pod.getMetadata().getName();
         log.info("Claiming pod {} for project {}", podName, projectId);
 
         client.pods().inNamespace(NAMESPACE).withName(podName).edit(p -> {
-            p.getMetadata().getLabels().put(PROJECT_LABEL, BUSY);
-            p.getMetadata().getLabels().put(POOL_LABEL, projectId.toString());
+            p.getMetadata().getLabels().put(POOL_LABEL, BUSY);
+            p.getMetadata().getLabels().put(PROJECT_LABEL, projectId.toString());
             return p;
         });
 
         try {
-            String initialSyncCmd = String.format("rm -rf /app* && mc mirror --overwrite myminio/projects/%d /app/", projectId);
+            String initialSyncCmd = String.format("mc mirror --overwrite myminio/codify-ai/%d /app/", projectId);
 
             log.info("Starting initial sync for project {} in pod {}", projectId, podName);
             execCommand(podName, SYNCER_CONTAINER, "sh", "-c", initialSyncCmd);
 
-            String watchCmd = String.format("nohup mc mirror --overwrite --watch myminio/projects/%d /app/ > /app/sync.log 2>&1 &", projectId);
+            String watchCmd = String.format("nohup mc mirror --overwrite --watch myminio/codify-ai/%d /app/ > /app/sync.log 2>&1 &", projectId);
             execCommand(podName, "syncer", "sh", "-c", watchCmd);
 
             String startCmd = "npm install && nohup npm run dev -- --host 0.0.0.0 --port 5173 > /app/dev.log 2>&1 &";
             log.info("Starting dev server for project {}", projectId);
             execCommand(podName, RUNNER_CONTAINER, "sh", "-c", startCmd);
+
+            registerRoute(domain, pod);
 
             log.info("Deployment successful: http://{}:{}", domain, REVERSE_PROXY_PORT);
             return new DeployResponse("http://" + domain + ":" + REVERSE_PROXY_PORT);
@@ -76,6 +84,13 @@ public class KubernetesDeploymentServiceImpl implements DeploymentService {
             client.pods().inNamespace(NAMESPACE).withName(podName).delete();
             throw new RuntimeException("Failed to deploy project " + projectId + ". Please try again later.", e);
         }
+    }
+
+    private void registerRoute(String domain, Pod pod) {
+        String podIp = pod.getStatus().getPodIP();
+        if (podIp == null) throw new RuntimeException("Pod IP running but has no IP!");
+
+        redisTemplate.opsForValue().set("route:" + domain, podIp + ":5173", 6, TimeUnit.HOURS);
     }
 
     private void execCommand(String podName, String container, String... command) {
