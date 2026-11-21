@@ -1,7 +1,7 @@
 package com.codifyai.service;
 
-import com.codifyai.dto.subscription.PlanResponse;
-import com.codifyai.dto.subscription.SubscriptionResponse;
+import com.codifyai.dto.response.subscription.PlanResponse;
+import com.codifyai.dto.response.subscription.SubscriptionResponse;
 import com.codifyai.enums.SubscriptionStatus;
 
 import java.time.Instant;

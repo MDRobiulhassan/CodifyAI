@@ -1,7 +1,7 @@
 package com.codifyai.service;
 
 
-import com.codifyai.dto.chat.StreamResponse;
+import com.codifyai.dto.response.chat.StreamResponse;
 import reactor.core.publisher.Flux;
 
 public interface AiGenerationService {

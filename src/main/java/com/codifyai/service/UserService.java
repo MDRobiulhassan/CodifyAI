@@ -1,6 +1,6 @@
 package com.codifyai.service;
 
-import com.codifyai.dto.auth.UserProfileResponse;
+import com.codifyai.dto.response.auth.UserProfileResponse;
 
 public interface UserService {
     UserProfileResponse getProfile();

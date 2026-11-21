@@ -1,8 +1,8 @@
 package com.codifyai.service;
 
-import com.codifyai.dto.member.InviteMemberRequest;
-import com.codifyai.dto.member.MemberResponse;
-import com.codifyai.dto.member.UpdateMemberRoleRequest;
+import com.codifyai.dto.request.member.InviteMemberRequest;
+import com.codifyai.dto.response.member.MemberResponse;
+import com.codifyai.dto.request.member.UpdateMemberRoleRequest;
 
 import java.util.List;
 

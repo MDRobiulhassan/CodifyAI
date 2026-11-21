@@ -1,6 +1,6 @@
 package com.codifyai.controller;
 
-import com.codifyai.dto.project.ProjectRequest;
+import com.codifyai.dto.request.project.ProjectRequest;
 import com.codifyai.service.DeploymentService;
 import com.codifyai.service.ProjectService;
 import jakarta.validation.Valid;

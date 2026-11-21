@@ -1,8 +1,8 @@
 package com.codifyai.serviceimpl;
 
-import com.codifyai.dto.project.FileContentResponse;
-import com.codifyai.dto.project.FileNode;
-import com.codifyai.dto.project.FileTreeResponse;
+import com.codifyai.dto.response.project.FileContentResponse;
+import com.codifyai.dto.response.project.FileNode;
+import com.codifyai.dto.response.project.FileTreeResponse;
 import com.codifyai.entity.Project;
 import com.codifyai.entity.ProjectFile;
 import com.codifyai.error.ResourceNotFoundException;

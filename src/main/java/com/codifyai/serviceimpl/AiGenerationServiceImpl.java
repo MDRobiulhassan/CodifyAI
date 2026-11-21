@@ -1,6 +1,6 @@
 package com.codifyai.serviceimpl;
 
-import com.codifyai.dto.chat.StreamResponse;
+import com.codifyai.dto.response.chat.StreamResponse;
 import com.codifyai.entity.*;
 import com.codifyai.enums.ChatEventType;
 import com.codifyai.enums.MessageRole;

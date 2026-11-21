@@ -1,6 +1,6 @@
 package com.codifyai.serviceimpl;
 
-import com.codifyai.dto.chat.ChatResponse;
+import com.codifyai.dto.request.chat.ChatResponse;
 import com.codifyai.entity.ChatMessage;
 import com.codifyai.entity.ChatSession;
 import com.codifyai.entity.ChatSessionId;

@@ -1,6 +1,6 @@
 package com.codifyai.mapper;
 
-import com.codifyai.dto.chat.ChatResponse;
+import com.codifyai.dto.request.chat.ChatResponse;
 import com.codifyai.entity.ChatMessage;
 import org.mapstruct.Mapper;
 

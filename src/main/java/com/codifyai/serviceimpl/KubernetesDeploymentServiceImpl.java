@@ -1,6 +1,6 @@
 package com.codifyai.serviceimpl;
 
-import com.codifyai.dto.deploy.DeployResponse;
+import com.codifyai.dto.response.deploy.DeployResponse;
 import com.codifyai.service.DeploymentService;
 import io.fabric8.kubernetes.api.model.Pod;
 import io.fabric8.kubernetes.client.KubernetesClient;

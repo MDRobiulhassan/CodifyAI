@@ -1,7 +1,7 @@
 package com.codifyai.controller;
 
-import com.codifyai.dto.member.InviteMemberRequest;
-import com.codifyai.dto.member.UpdateMemberRoleRequest;
+import com.codifyai.dto.request.member.InviteMemberRequest;
+import com.codifyai.dto.request.member.UpdateMemberRoleRequest;
 import com.codifyai.service.ProjectMemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

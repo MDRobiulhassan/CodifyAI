@@ -1,7 +1,7 @@
 package com.codifyai.service;
 
 
-import com.codifyai.dto.chat.ChatResponse;
+import com.codifyai.dto.request.chat.ChatResponse;
 
 import java.util.List;
 

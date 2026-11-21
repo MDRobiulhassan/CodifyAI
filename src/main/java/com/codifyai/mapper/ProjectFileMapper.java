@@ -1,6 +1,6 @@
 package com.codifyai.mapper;
 
-import com.codifyai.dto.project.FileNode;
+import com.codifyai.dto.response.project.FileNode;
 import com.codifyai.entity.ProjectFile;
 import org.mapstruct.Mapper;
 

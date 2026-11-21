@@ -1,6 +1,6 @@
 package com.codifyai.mapper;
 
-import com.codifyai.dto.member.MemberResponse;
+import com.codifyai.dto.response.member.MemberResponse;
 import com.codifyai.entity.ProjectMember;
 import com.codifyai.entity.User;
 import org.mapstruct.Mapper;

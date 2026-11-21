@@ -1,6 +1,6 @@
 package com.codifyai.serviceimpl;
 
-import com.codifyai.dto.auth.UserProfileResponse;
+import com.codifyai.dto.response.auth.UserProfileResponse;
 import com.codifyai.repository.UserRepository;
 import com.codifyai.security.AuthUtil;
 import com.codifyai.service.UserService;

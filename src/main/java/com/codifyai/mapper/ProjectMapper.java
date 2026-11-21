@@ -1,7 +1,7 @@
 package com.codifyai.mapper;
 
-import com.codifyai.dto.project.ProjectResponse;
-import com.codifyai.dto.project.ProjectSummaryResponse;
+import com.codifyai.dto.response.project.ProjectResponse;
+import com.codifyai.dto.response.project.ProjectSummaryResponse;
 import com.codifyai.entity.Project;
 import com.codifyai.enums.ProjectRole;
 import org.mapstruct.Mapper;

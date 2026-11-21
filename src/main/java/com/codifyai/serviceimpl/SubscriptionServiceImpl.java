@@ -1,7 +1,7 @@
 package com.codifyai.serviceimpl;
 
-import com.codifyai.dto.subscription.PlanResponse;
-import com.codifyai.dto.subscription.SubscriptionResponse;
+import com.codifyai.dto.response.subscription.PlanResponse;
+import com.codifyai.dto.response.subscription.SubscriptionResponse;
 import com.codifyai.entity.Plan;
 import com.codifyai.entity.Subscription;
 import com.codifyai.entity.User;

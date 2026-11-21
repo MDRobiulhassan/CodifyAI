@@ -1,7 +1,7 @@
 package com.codifyai.mapper;
 
-import com.codifyai.dto.auth.SignupRequest;
-import com.codifyai.dto.auth.UserProfileResponse;
+import com.codifyai.dto.request.auth.SignupRequest;
+import com.codifyai.dto.response.auth.UserProfileResponse;
 import com.codifyai.entity.User;
 import org.mapstruct.Mapper;
 

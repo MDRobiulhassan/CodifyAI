@@ -1,9 +1,0 @@
-package com.codifyai.dto.subscription;
-
-public record UsageTodayResponse(
-        Integer tokenUsed,
-        Integer tokenLimits,
-        Integer previewsRunning,
-        Integer previewsLimit
-) {
-}

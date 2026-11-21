@@ -1,7 +1,7 @@
 package com.codifyai.controller;
 
-import com.codifyai.dto.auth.LoginRequest;
-import com.codifyai.dto.auth.SignupRequest;
+import com.codifyai.dto.request.auth.LoginRequest;
+import com.codifyai.dto.request.auth.SignupRequest;
 import com.codifyai.service.AuthService;
 import com.codifyai.service.UserService;
 import jakarta.validation.Valid;

@@ -1,8 +1,8 @@
 package com.codifyai.service;
 
-import com.codifyai.dto.project.ProjectRequest;
-import com.codifyai.dto.project.ProjectResponse;
-import com.codifyai.dto.project.ProjectSummaryResponse;
+import com.codifyai.dto.request.project.ProjectRequest;
+import com.codifyai.dto.response.project.ProjectResponse;
+import com.codifyai.dto.response.project.ProjectSummaryResponse;
 
 import java.util.List;
 

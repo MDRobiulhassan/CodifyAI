@@ -1,8 +1,8 @@
 package com.codifyai.serviceimpl;
 
-import com.codifyai.dto.member.InviteMemberRequest;
-import com.codifyai.dto.member.MemberResponse;
-import com.codifyai.dto.member.UpdateMemberRoleRequest;
+import com.codifyai.dto.request.member.InviteMemberRequest;
+import com.codifyai.dto.response.member.MemberResponse;
+import com.codifyai.dto.request.member.UpdateMemberRoleRequest;
 import com.codifyai.entity.Project;
 import com.codifyai.entity.ProjectMember;
 import com.codifyai.entity.ProjectMemberId;

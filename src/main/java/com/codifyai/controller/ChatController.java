@@ -1,7 +1,7 @@
 package com.codifyai.controller;
 
-import com.codifyai.dto.chat.ChatRequest;
-import com.codifyai.dto.chat.StreamResponse;
+import com.codifyai.dto.request.chat.ChatRequest;
+import com.codifyai.dto.response.chat.StreamResponse;
 import com.codifyai.service.AiGenerationService;
 import com.codifyai.service.ChatService;
 import lombok.AccessLevel;

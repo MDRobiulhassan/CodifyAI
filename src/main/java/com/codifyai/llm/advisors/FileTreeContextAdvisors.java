@@ -1,6 +1,6 @@
 package com.codifyai.llm.advisors;
 
-import com.codifyai.dto.project.FileNode;
+import com.codifyai.dto.response.project.FileNode;
 import com.codifyai.service.ProjectFileService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;

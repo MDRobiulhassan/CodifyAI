@@ -1,10 +1,7 @@
 package com.codifyai.service;
 
-import com.codifyai.dto.project.FileContentResponse;
-import com.codifyai.dto.project.FileNode;
-import com.codifyai.dto.project.FileTreeResponse;
-
-import java.util.List;
+import com.codifyai.dto.response.project.FileContentResponse;
+import com.codifyai.dto.response.project.FileTreeResponse;
 
 public interface ProjectFileService {
     FileTreeResponse getFileTree(Long projectId);
