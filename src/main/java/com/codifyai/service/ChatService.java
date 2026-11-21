@@ -1,10 +1,10 @@
 package com.codifyai.service;
 
 
-import com.codifyai.dto.request.chat.ChatResponse;
+import com.codifyai.dto.response.chat.ChatEventResponse;
 
 import java.util.List;
 
 public interface ChatService {
-    List<ChatResponse> getProjectChatHistory(Long projectId);
+    List<ChatEventResponse.ChatResponse> getProjectChatHistory(Long projectId);
 }

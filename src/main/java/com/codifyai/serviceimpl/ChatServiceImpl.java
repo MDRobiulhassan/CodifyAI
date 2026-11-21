@@ -1,6 +1,6 @@
 package com.codifyai.serviceimpl;
 
-import com.codifyai.dto.request.chat.ChatResponse;
+import com.codifyai.dto.response.chat.ChatEventResponse;
 import com.codifyai.entity.ChatMessage;
 import com.codifyai.entity.ChatSession;
 import com.codifyai.entity.ChatSessionId;
@@ -26,7 +26,7 @@ public class ChatServiceImpl implements ChatService {
     private final ChatMapper chatMapper;
 
     @Override
-    public List<ChatResponse> getProjectChatHistory(Long projectId) {
+    public List<ChatEventResponse.ChatResponse> getProjectChatHistory(Long projectId) {
         Long userId = authUtil.getCurrentUserId();
         ChatSession chatSession = chatSessionRepository.getReferenceById(
                 new ChatSessionId(projectId, userId)
