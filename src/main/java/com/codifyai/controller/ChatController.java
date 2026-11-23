@@ -20,7 +20,7 @@ import reactor.core.publisher.Flux;
 public class ChatController {
 
     AiGenerationService aiGenerationService;
-    private final ChatService chatService;
+    ChatService chatService;
 
     @PostMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<?> streamChat(@RequestBody ChatRequest request) {
