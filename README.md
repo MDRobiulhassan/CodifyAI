@@ -194,24 +194,35 @@ On macOS or Linux:
 ## Project structure
 
 ```text
-src/main/java/com/codifyai/
-  config/       Application and infrastructure configuration
-  controller/   REST API controllers
-  dto/          Request and response models
-  entity/       JPA entities
-  repository/   Data access repositories
-  security/     Authentication and authorization
-  service/      Service interfaces
-  serviceimpl/  Service implementations
-  llm/          AI model integration
-
-src/main/resources/
-  application.yaml        Environment-based configuration
-  application-local.yaml  Local development configuration
-
-proxy/                    Dynamic project proxy
-k8s/                      Kubernetes manifests
-documentation/            API, architecture, and project documentation
+├── documentation/            API documentation, architecture diagrams, and project reports
+├── k8s/                      Kubernetes manifests and deployment configurations
+├── proxy/                    Dynamic project proxy (Node.js)
+├── src/
+│   ├── main/
+│   │   ├── java/com/codifyai/
+│   │   │   ├── config/       Application and infrastructure configuration
+│   │   │   ├── controller/   REST API controllers
+│   │   │   ├── dto/
+│   │   │   │   ├── request/  API request models
+│   │   │   │   └── response/ API response models
+│   │   │   ├── entity/       JPA entities and database models
+│   │   │   ├── enums/        Application enumerations
+│   │   │   ├── error/        Exception handling and API error responses
+│   │   │   ├── llm/          LLM integration and code generation
+│   │   │   │   ├── advisors/ LLM context advisors
+│   │   │   │   └── tools/    AI-powered code generation tools
+│   │   │   ├── mapper/       MapStruct DTO and entity mappers
+│   │   │   ├── repository/   Spring Data JPA repositories
+│   │   │   ├── security/     Authentication and authorization
+│   │   │   ├── service/      Service interfaces and business contracts
+│   │   │   ├── serviceimpl/  Service implementations
+│   │   │   └── CodifyAIApplication.java
+│   │   └── resources/
+│   │       ├── application.yaml        Main application configuration
+│   │       └── application-local.yaml  Local development configuration
+│   └── test/
+├── Dockerfile                Backend container configuration
+├── local-proxy.cjs           Local development proxy
 ```
 
 ## Security notes
