@@ -220,7 +220,6 @@ On macOS or Linux:
 │   │   └── resources/
 │   │       ├── application.yaml        Main application configuration
 │   │       └── application-local.yaml  Local development configuration
-│   └── test/
 ├── Dockerfile                Backend container configuration
 ├── local-proxy.cjs           Local development proxy
 ```
