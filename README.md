@@ -234,4 +234,4 @@ On macOS or Linux:
 
 ## License
 
-This project is intended for educational and development purposes. Review and add an appropriate license before distributing it.
+This project is currently not licensed for public use or redistribution. All rights reserved.
